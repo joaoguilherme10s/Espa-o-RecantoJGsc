@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Espaço Recanto | Agendamentos em Camobi</title>
+  <title>Espaço Recanto | Agendamentos em Camobi - Santa Maria, RS</title>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- FontAwesome Ícones -->
+  <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <!-- Fontes do Google -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   
-  <!-- Supabase JS Client -->
+  <!-- Supabase JS Client v2 -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <script>
@@ -28,233 +28,505 @@
           },
           colors: {
             brand: {
-              dark: '#181A1B',      /* Grafite profundo */
-              card: '#222528',      /* Grafite card */
-              gold: '#D4AF37',      /* Dourado logotipo */
+              dark: '#181A1B',
+              card: '#222528',
+              gold: '#D4AF37',
               goldHover: '#B59228',
-              green: '#3F4E46'      /* Verde oliva móveis */
+              olive: '#3F4E46',
+              oliveHover: '#2E3B34'
             }
           }
         }
       }
     }
   </script>
+  
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #181A1B;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #222528;
+      border-radius: 4px;
+      border: 1px solid #3F4E46;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #D4AF37;
+    }
+  </style>
 </head>
-<body class="bg-brand-dark text-gray-100 font-sans antialiased selection:bg-brand-gold selection:text-black min-h-screen flex flex-col">
+<body class="bg-brand-dark text-gray-100 font-sans antialiased selection:bg-brand-gold selection:text-black min-h-screen flex flex-col justify-between">
 
-  <!-- Configuração pública do serviço de dados com a NOVA CHAVE -->
+  <!-- CONFIGURAÇÃO SUPABASE -->
   <script>
-    const SUPABASE_URL = 'https://fqzdrivepraezltbbjucz.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZxemRydmVwcmFlemx0YmJqdWN6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMwNTE5MDUsImV4cCI6MjEwODYyNzkwNX0.ZB_CNRJTq4GWHj9FSp_2gxlxrG5YpBb8LwlZVNGs7Io';
+    const SUPABASE_URL = 'https://wsbsujzmmeluouexlbgql.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndzYnN1anptbWVsdW9leGxiZ3FsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMwNTU5NjEsImV4cCI6MjEwODYzMTk2MX0.xIGUZi4Ac-wkpZtIw-2KkNw_Dpuacp9AoS3BgLVBnP0';
     
     const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     const BUCKET_URL = `${SUPABASE_URL}/storage/v1/object/public/fotos-espaco`;
   </script>
 
   <!-- NAVEGAÇÃO SUPERIOR -->
-  <nav class="fixed top-0 left-0 w-full bg-brand-dark/95 backdrop-blur-md z-50 border-b border-gray-800">
+  <nav class="fixed top-0 left-0 w-full bg-brand-dark/95 backdrop-blur-md z-40 border-b border-gray-800 shadow-xl">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- LOGO MEDALHÃO -->
       <a href="#" class="flex items-center gap-3.5 group">
-        <div class="w-12 h-12 rounded-full border-2 border-brand-gold flex items-center justify-center bg-black/40 shadow-inner group-hover:scale-105 transition">
+        <div class="w-12 h-12 rounded-full border-2 border-brand-gold flex items-center justify-center bg-black/50 shadow-inner group-hover:scale-105 transition-transform duration-300">
           <span class="font-logo text-brand-gold text-3xl font-normal leading-none pl-0.5 pt-1 select-none">ER</span>
         </div>
         <div class="flex flex-col">
           <span class="font-extrabold text-lg sm:text-xl tracking-wider text-white uppercase leading-none">Espaço Recanto</span>
-          <span class="text-xs text-brand-gold tracking-widest uppercase mt-1">Camobi • Santa Maria</span>
+          <span class="text-[11px] text-brand-gold font-semibold tracking-widest uppercase mt-1">Camobi • Santa Maria-RS</span>
         </div>
       </a>
-      <div class="flex items-center gap-4 sm:gap-6 text-sm font-medium text-gray-300">
-        <a href="#agendar" class="hover:text-brand-gold transition flex items-center gap-1.5">
+
+      <!-- LINKS NAVEGAÇÃO -->
+      <div class="flex items-center gap-4 sm:gap-7 text-xs sm:text-sm font-semibold text-gray-300">
+        <a href="#agendar" class="hover:text-brand-gold transition-colors flex items-center gap-1.5">
           <i class="fa-regular fa-calendar-days text-brand-gold"></i> Agendar
         </a>
-        <a href="#sobre" class="hover:text-brand-gold transition hidden sm:inline-block">O Espaço</a>
-        <a href="#galeria" class="hover:text-brand-gold transition hidden md:inline-block">Fotos</a>
-        <button type="button" onclick="abrirDiretoria()" class="bg-brand-gold text-black px-4 py-2.5 rounded-full font-bold text-xs hover:bg-brand-goldHover transition uppercase tracking-wider shadow-md">
-          Área da Diretoria
+        <a href="#sobre" class="hover:text-brand-gold transition-colors hidden sm:inline-block">O Espaço</a>
+        <a href="#galeria" class="hover:text-brand-gold transition-colors hidden md:inline-block">Fotos</a>
+        
+        <button type="button" onclick="abrirDiretoria()" class="bg-brand-gold text-black px-4 py-2.5 rounded-full font-bold text-xs hover:bg-brand-goldHover transition-all shadow-md hover:shadow-brand-gold/20 uppercase tracking-wider flex items-center gap-2">
+          <i class="fa-solid fa-user-shield"></i> Área da Diretoria
         </button>
       </div>
+
     </div>
   </nav>
 
-  <!-- 1. HERO COMPACTO -->
-  <section class="pt-28 pb-8 px-4 max-w-7xl mx-auto w-full">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-brand-card border border-gray-800 p-6 md:p-8 rounded-3xl shadow-2xl">
-      <div class="lg:col-span-7 space-y-4">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-gold/10 border border-brand-gold/30 text-brand-gold text-xs font-semibold">
-          <i class="fa-solid fa-location-dot"></i> Bairro Camobi, Santa Maria-RS
+  <main class="mt-20 flex-grow">
+    
+    <!-- HERO -->
+    <section class="pt-8 pb-8 px-4 max-w-7xl mx-auto w-full">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-brand-card border border-gray-800 p-6 md:p-10 rounded-3xl shadow-2xl relative overflow-hidden">
+        
+        <!-- Elemento Decorativo Verde Oliva -->
+        <div class="absolute -right-20 -bottom-20 w-64 h-64 bg-brand-olive/20 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="lg:col-span-7 space-y-5 z-10">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-olive/40 border border-brand-olive text-gray-200 text-xs font-semibold">
+            <i class="fa-solid fa-location-dot text-brand-gold"></i> Bairro Camobi, Santa Maria - RS
+          </div>
+          <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-tight">
+            Celebre seus momentos especiais no <span class="text-brand-gold">Espaço Recanto</span>.
+          </h1>
+          <p class="text-gray-300 text-sm md:text-base leading-relaxed">
+            Estrutura acolhedora com piscina, salão amplo, churrasqueira gourmet e área de lazer em localização privilegiada no coração de Camobi. O local perfeito para aniversários, reuniões de família e confraternizações.
+          </p>
+          <div class="flex flex-wrap gap-4 pt-2">
+            <a href="#agendar" class="bg-brand-gold text-black px-6 py-3.5 rounded-xl font-bold text-sm hover:bg-brand-goldHover transition shadow-lg flex items-center gap-2 uppercase tracking-wide">
+              <i class="fa-solid fa-calendar-check"></i> Verificar Calendário
+            </a>
+            <a href="#sobre" class="bg-brand-dark text-gray-200 border border-gray-700 px-6 py-3.5 rounded-xl font-bold text-sm hover:border-brand-gold transition flex items-center gap-2">
+              Conhecer a História
+            </a>
+          </div>
         </div>
-        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-tight">
-          Reserve o <span class="text-brand-gold">Espaço Recanto</span> para o seu evento.
-        </h1>
-        <p class="text-gray-300 text-sm md:text-base leading-relaxed">
-          Estrutura completa com piscina, área gourmet, churrasqueira, salão de jogos e ambiente climatizado para reuniões e celebrações inesquecíveis.
-        </p>
-      </div>
-      <div class="lg:col-span-5 relative rounded-2xl overflow-hidden border border-gray-700 shadow-lg aspect-video lg:aspect-square">
-        <img src="https://fqzdrivepraezltbbjucz.supabase.co/storage/v1/object/public/fotos-espaco/IMG_5827.jpg" alt="Fachada" class="w-full h-full object-cover">
-      </div>
-    </div>
-  </section>
 
-  <!-- 2. CALENDÁRIO & FORMULÁRIO -->
-  <section id="agendar" class="py-6 px-4 max-w-4xl mx-auto w-full">
-    <div class="bg-brand-card p-6 md:p-8 rounded-3xl border border-brand-gold/40 shadow-2xl relative">
-      <div class="text-center mb-8">
-        <span class="text-brand-gold text-xs font-bold uppercase tracking-widest">Passo 1 de 2</span>
-        <h2 class="text-2xl md:text-3xl font-extrabold text-white">Escolha a Data do seu Evento</h2>
-        <p class="text-gray-400 text-xs md:text-sm mt-1">Consulte a disponibilidade em tempo real.</p>
-      </div>
+        <!-- Foto Fachada -->
+        <div class="lg:col-span-5 relative rounded-2xl overflow-hidden border border-gray-700 shadow-2xl aspect-video lg:aspect-square bg-brand-dark group">
+          <img 
+            src="https://wsbsujzmmeluouexlbgql.supabase.co/storage/v1/object/public/fotos-espaco/IMG_5827.jpg" 
+            alt="Fachada do Espaço Recanto" 
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            onerror="this.onerror=null; this.src='https://placehold.co/600x600/222528/D4AF37?text=Espa%C3%A7o+Recanto';"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-4">
+            <span class="text-xs text-gray-300 font-medium bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-lg border border-gray-700">
+              <i class="fa-solid fa-camera text-brand-gold mr-1.5"></i> Vista Externa & Lazer
+            </span>
+          </div>
+        </div>
 
-      <form id="form-agendamento" onsubmit="processarAgendamento(event)" class="space-y-6">
-        <div class="bg-brand-dark p-5 rounded-2xl border border-gray-700">
-          <label class="block text-sm font-semibold text-gray-200 mb-2">
-            <i class="fa-regular fa-calendar-days text-brand-gold mr-2"></i>Selecione o Dia Pretendido:
-          </label>
-          <input type="hidden" id="data_evento" required />
+      </div>
+    </section>
+
+    <!-- SEÇÃO DE AGENDAMENTO E CALENDÁRIO VISÍVEL -->
+    <section id="agendar" class="py-10 px-4 max-w-5xl mx-auto w-full">
+      <div class="bg-brand-card p-6 md:p-10 rounded-3xl border border-brand-gold/30 shadow-2xl relative">
+        
+        <div class="text-center mb-8">
+          <span class="text-brand-gold text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full bg-brand-gold/10 border border-brand-gold/20">Reserva Simplificada</span>
+          <h2 class="text-2xl md:text-4xl font-extrabold text-white mt-3">Agende sua Data no Espaço</h2>
+          <p class="text-gray-400 text-xs md:text-sm mt-2 max-w-xl mx-auto">
+            Navegue pelo calendário, escolha o dia desejado e preencha suas informações para solicitar a reserva.
+          </p>
+        </div>
+
+        <form id="form-agendamento" onsubmit="processarAgendamento(event)" class="space-y-8">
           
-          <div class="rounded-2xl border border-gray-700 bg-brand-card p-4 md:p-5">
-            <div class="flex items-center justify-between gap-3 mb-4">
-              <button type="button" id="mes-anterior" class="rounded-lg px-4 py-3 bg-brand-dark border border-gray-700 hover:border-brand-gold text-brand-gold"><i class="fa-solid fa-chevron-left"></i></button>
-              <h3 id="mes-calendario" class="text-white font-extrabold text-lg md:text-xl text-center"></h3>
-              <button type="button" id="proximo-mes" class="rounded-lg px-4 py-3 bg-brand-dark border border-gray-700 hover:border-brand-gold text-brand-gold"><i class="fa-solid fa-chevron-right"></i></button>
+          <!-- CALENDÁRIO INTERATIVO VISÍVEL -->
+          <div class="bg-brand-dark p-5 md:p-7 rounded-2xl border border-gray-700 shadow-inner">
+            <input type="hidden" id="data_evento" required />
+            
+            <div class="flex items-center justify-between gap-3 mb-6">
+              <button type="button" id="mes-anterior" class="rounded-xl px-4 py-3 bg-brand-card border border-gray-700 hover:border-brand-gold text-brand-gold transition font-bold flex items-center gap-2 text-sm">
+                <i class="fa-solid fa-chevron-left"></i> <span class="hidden sm:inline">Anterior</span>
+              </button>
+              <h3 id="mes-calendario" class="text-white font-extrabold text-lg md:text-2xl text-center capitalize tracking-wide">
+                Carregando...
+              </h3>
+              <button type="button" id="proximo-mes" class="rounded-xl px-4 py-3 bg-brand-card border border-gray-700 hover:border-brand-gold text-brand-gold transition font-bold flex items-center gap-2 text-sm">
+                <span class="hidden sm:inline">Próximo</span> <i class="fa-solid fa-chevron-right"></i>
+              </button>
             </div>
-            <div class="grid grid-cols-7 gap-1 md:gap-2 text-center text-xs font-bold uppercase tracking-wide text-gray-400 mb-2">
-              <div>Dom</div><div>Seg</div><div>Ter</div><div>Qua</div><div>Qui</div><div>Sex</div><div>Sáb</div>
-            </div>
-            <div id="grade-calendario" class="grid grid-cols-7 gap-1 md:gap-2"></div>
-            <p id="data-selecionada-label" class="mt-4 text-sm font-semibold text-brand-gold">Selecione um dia no calendário.</p>
-          </div>
-          <div id="status-data" class="mt-3 hidden text-sm font-medium p-3 rounded-xl"></div>
-        </div>
 
-        <div id="campos-cliente" class="space-y-5 pt-2">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <div>
-              <label class="block text-xs font-semibold text-gray-300 mb-1.5">Seu Nome Completo *</label>
-              <input type="text" id="nome_cliente" required placeholder="Ex: Maria Silva" class="w-full bg-brand-dark border border-gray-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-brand-gold" />
+            <!-- Cabeçalho Dias da Semana -->
+            <div class="grid grid-cols-7 gap-1 md:gap-2 text-center text-xs font-extrabold uppercase tracking-wider text-brand-gold mb-3">
+              <div class="py-1">Dom</div>
+              <div class="py-1">Seg</div>
+              <div class="py-1">Ter</div>
+              <div class="py-1">Qua</div>
+              <div class="py-1">Qui</div>
+              <div class="py-1">Sex</div>
+              <div class="py-1">Sáb</div>
             </div>
-            <div>
-              <label class="block text-xs font-semibold text-gray-300 mb-1.5">WhatsApp para Contato *</label>
-              <input type="tel" id="whatsapp" required placeholder="(55) 99999-9999" class="w-full bg-brand-dark border border-gray-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-brand-gold" />
+
+            <!-- Grade de Dias -->
+            <div id="grade-calendario" class="grid grid-cols-7 gap-1 md:gap-2"></div>
+
+            <!-- Seleção e Feedback Status -->
+            <div class="mt-6 pt-4 border-t border-gray-800 flex flex-col sm:flex-row items-center justify-between gap-3">
+              <div class="flex items-center gap-2">
+                <i class="fa-regular fa-calendar-check text-brand-gold text-lg"></i>
+                <p id="data-selecionada-label" class="text-sm font-semibold text-gray-200">
+                  Nenhuma data selecionada no calendário.
+                </p>
+              </div>
+              <div id="status-data" class="hidden text-xs md:text-sm font-semibold px-4 py-2 rounded-xl transition-all"></div>
             </div>
           </div>
-          <div>
-            <label class="block text-xs font-semibold text-gray-300 mb-1.5">Tipo de Evento *</label>
-            <select id="tipo_evento" required class="w-full bg-brand-dark border border-gray-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-brand-gold">
-              <option value="">Selecione o tipo...</option>
-              <option value="Aniversário">Aniversário</option>
-              <option value="Casamento / Noivado">Casamento / Noivado</option>
-              <option value="Formatura">Formatura</option>
-              <option value="Confraternização">Confraternização Corporativa</option>
-              <option value="Encontro Familiar">Reunião Familiar / Churrasco</option>
-              <option value="Outro">Outro</option>
-            </select>
+
+          <!-- FORMULÁRIO DO CLIENTE -->
+          <div id="campos-cliente" class="space-y-6 pt-2">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-gray-300 mb-2">
+                  <i class="fa-solid fa-user text-brand-gold mr-1"></i> Seu Nome Completo *
+                </label>
+                <input 
+                  type="text" 
+                  id="nome_cliente" 
+                  required 
+                  placeholder="Ex: Maria Silva" 
+                  class="w-full bg-brand-dark border border-gray-700 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-brand-gold transition"
+                />
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-gray-300 mb-2">
+                  <i class="fa-brands fa-whatsapp text-green-400 mr-1"></i> WhatsApp para Contato *
+                </label>
+                <input 
+                  type="tel" 
+                  id="whatsapp" 
+                  required 
+                  oninput="aplicarMascaraWhatsApp(this)"
+                  placeholder="(55) 99999-9999" 
+                  maxlength="15"
+                  class="w-full bg-brand-dark border border-gray-700 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-brand-gold transition"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-gray-300 mb-2">
+                <i class="fa-solid fa-champagne-glasses text-brand-gold mr-1"></i> Tipo de Evento *
+              </label>
+              <select id="tipo_evento" required class="w-full bg-brand-dark border border-gray-700 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-brand-gold transition">
+                <option value="">Selecione o tipo de evento...</option>
+                <option value="Aniversário">Aniversário</option>
+                <option value="Casamento / Noivado">Casamento / Noivado</option>
+                <option value="Formatura">Formatura</option>
+                <option value="Confraternização Corporativa">Confraternização Corporativa</option>
+                <option value="Reunião Familiar / Churrasco">Reunião Familiar / Churrasco</option>
+                <option value="Outro Evento">Outro Evento</option>
+              </select>
+            </div>
+
+            <!-- TERMOS DE USO -->
+            <div class="bg-brand-dark p-5 rounded-2xl border border-gray-800 text-xs text-gray-300 space-y-3">
+              <h4 class="font-extrabold text-brand-gold text-sm flex items-center gap-2">
+                <i class="fa-solid fa-shield-halved"></i> Regulamento do Espaço Recanto
+              </h4>
+              <ul class="list-disc list-inside space-y-1.5 text-gray-400">
+                <li>O horário de término padrão do evento deve respeitar a legislação de ruído do município.</li>
+                <li>Zelar pelo patrimônio, mobiliário, eletrodomésticos e área de lazer durante o período reservado.</li>
+                <li>A confirmação final do agendamento é sujeita à validação da Diretoria via WhatsApp.</li>
+              </ul>
+              <label class="flex items-start gap-3 pt-2 text-white font-medium cursor-pointer select-none">
+                <input type="checkbox" id="aceita_termos" required class="mt-0.5 w-4 h-4 accent-brand-gold rounded cursor-pointer" />
+                <span>Li e concordo com os termos de utilização do Espaço Recanto.</span>
+              </label>
+            </div>
+
+            <button 
+              type="submit" 
+              id="btn-submit" 
+              class="w-full bg-brand-gold text-black font-extrabold py-4 rounded-xl shadow-xl hover:bg-brand-goldHover transition duration-200 text-base uppercase tracking-wider flex items-center justify-center gap-2"
+            >
+              <i class="fa-solid fa-paper-plane"></i> Confirmar e Solicitar Agendamento
+            </button>
           </div>
-          <button type="submit" id="btn-submit" class="w-full bg-brand-gold text-black font-extrabold py-4 rounded-xl shadow-lg hover:bg-brand-goldHover transition duration-200 text-base uppercase tracking-wider">
-            Confirmar e Solicitar Agendamento
+        </form>
+
+        <!-- SUCESSO DA RESERVA -->
+        <div id="sucesso-reserva" class="hidden text-center py-12 space-y-5">
+          <div class="w-20 h-20 bg-green-500/20 text-green-400 rounded-full flex items-center justify-center mx-auto text-4xl border border-green-500/40 animate-bounce">
+            <i class="fa-solid fa-circle-check"></i>
+          </div>
+          <h3 class="text-3xl font-extrabold text-white">Solicitação Recebida!</h3>
+          <p class="text-gray-300 text-sm md:text-base max-w-lg mx-auto leading-relaxed">
+            Sua reserva para o dia <span id="reserva-data-confirmada" class="text-brand-gold font-extrabold"></span> foi enviada com sucesso para a nossa equipe.
+          </p>
+          <p class="text-xs text-gray-400">
+            Em breve entraremos em contato através do número fornecido via WhatsApp para finalizar os detalhes.
+          </p>
+          <button onclick="resetarFormulario()" class="mt-4 bg-brand-dark border border-brand-gold/50 text-brand-gold px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-wider hover:bg-brand-gold hover:text-black transition">
+            <i class="fa-solid fa-rotate-left mr-1"></i> Fazer nova consulta
           </button>
         </div>
-      </form>
 
-      <div id="sucesso-reserva" class="hidden text-center py-10 space-y-4">
-        <div class="w-16 h-16 bg-green-500/20 text-green-400 rounded-full flex items-center justify-center mx-auto text-3xl border border-green-500/40">
-          <i class="fa-solid fa-circle-check"></i>
+      </div>
+    </section>
+
+    <!-- SEÇÃO SOBRE -->
+    <section id="sobre" class="py-14 px-4 max-w-7xl mx-auto w-full">
+      <div class="bg-brand-card p-8 md:p-12 rounded-3xl border border-gray-800 grid grid-cols-1 md:grid-cols-12 gap-8 items-center shadow-xl">
+        <div class="md:col-span-8 space-y-4">
+          <span class="text-brand-gold text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full bg-brand-gold/10 border border-brand-gold/20">Tradição & Acolhimento</span>
+          <h2 class="text-2xl md:text-3xl font-extrabold text-white">Conheça o Espaço Recanto</h2>
+          <p class="text-gray-300 text-sm md:text-base leading-relaxed">
+            Fundado por <strong class="text-white">Jocinara Martins Pozzer</strong>, o Espaço Recanto nasceu da paixão por criar momentos memoráveis em um ambiente acolhedor, seguro e refinado.
+          </p>
+          <p class="text-gray-400 text-xs md:text-sm leading-relaxed">
+            Localizado estrategicamente no tradicional bairro Camobi em Santa Maria-RS, oferecemos infraestrutura preparada para acolher celebrações intimistas e eventos de grande destaque.
+          </p>
+          
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-3">
+            <div class="p-3 bg-brand-dark rounded-xl border border-gray-800 text-center">
+              <i class="fa-solid fa-water-ladder text-brand-gold text-lg mb-1"></i>
+              <p class="text-xs font-bold text-white">Piscina Ampla</p>
+            </div>
+            <div class="p-3 bg-brand-dark rounded-xl border border-gray-800 text-center">
+              <i class="fa-solid fa-fire-burner text-brand-gold text-lg mb-1"></i>
+              <p class="text-xs font-bold text-white">Churrasqueira</p>
+            </div>
+            <div class="p-3 bg-brand-dark rounded-xl border border-gray-800 text-center">
+              <i class="fa-solid fa-snowflake text-brand-gold text-lg mb-1"></i>
+              <p class="text-xs font-bold text-white">Climatizado</p>
+            </div>
+          </div>
         </div>
-        <h3 class="text-2xl font-bold text-white">Solicitação Recebida com Sucesso!</h3>
-        <p class="text-gray-300 text-sm max-w-md mx-auto">Sua solicitação para o dia <span id="reserva-data-confirmada" class="text-brand-gold font-bold"></span> foi cadastrada.</p>
-        <button onclick="resetarFormulario()" class="text-xs text-brand-gold underline hover:text-white pt-2 inline-block">Fazer nova consulta</button>
+
+        <div class="md:col-span-4 bg-brand-dark p-6 rounded-2xl border border-brand-olive/50 text-center space-y-3">
+          <div class="w-16 h-16 rounded-full border-2 border-brand-gold flex items-center justify-center bg-black/60 mx-auto">
+            <span class="font-logo text-brand-gold text-4xl">ER</span>
+          </div>
+          <h3 class="text-white font-bold text-base">Jocinara Martins Pozzer</h3>
+          <p class="text-brand-gold text-xs font-semibold uppercase tracking-wider">Fundadora & Gestora</p>
+          <p class="text-xs text-gray-400 italic">"Nossa missão é transformar sua comemoração em uma memória inesquecível para toda a família."</p>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- 3. SOBRE -->
-  <section id="sobre" class="py-16 px-4 max-w-5xl mx-auto w-full">
-    <div class="bg-brand-card/60 p-8 md:p-12 rounded-3xl border border-gray-800">
-      <h2 class="text-2xl font-bold text-white mb-2">Acolhimento e Tradição em Camobi</h2>
-      <p class="text-gray-300 text-sm">Criado por <strong>Jocinara Martins Pozzer</strong>, o Espaço Recanto oferece um ambiente aconchegante para reuniões e celebrações.</p>
-    </div>
-  </section>
-
-  <!-- 4. GALERIA -->
-  <section id="galeria" class="py-12 px-4 max-w-7xl mx-auto w-full border-t border-gray-800/80">
-    <div class="text-center mb-8">
-      <h2 class="text-2xl font-bold text-white">Galeria do Espaço</h2>
-    </div>
-    <div id="grid-fotos" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"></div>
-  </section>
-
-  <!-- MODAL DIRETORIA -->
-  <div id="modal-diretoria" class="fixed inset-0 z-[70] hidden overflow-y-auto bg-black/90 p-4 md:p-8">
-    <div class="max-w-6xl mx-auto my-4 rounded-2xl border border-gray-700 bg-brand-card p-5 md:p-8 shadow-2xl">
-      <div class="flex items-start justify-between gap-4 mb-6">
-        <div><h2 class="text-2xl font-extrabold text-white">Área da Diretoria</h2></div>
-        <button type="button" onclick="fecharDiretoria()" class="text-gray-300 hover:text-white text-2xl">&times;</button>
+    <!-- GALERIA DE FOTOS INTERATIVA -->
+    <section id="galeria" class="py-12 px-4 max-w-7xl mx-auto w-full border-t border-gray-800/80">
+      <div class="text-center mb-10">
+        <span class="text-brand-gold text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full bg-brand-gold/10 border border-brand-gold/20">Galeria Visual</span>
+        <h2 class="text-2xl md:text-3xl font-extrabold text-white mt-2">Fotos do Espaço Recanto</h2>
+        <p class="text-gray-400 text-xs md:text-sm mt-1">Clique em qualquer foto para ampliar</p>
       </div>
-      <div id="login-diretoria" class="max-w-md mx-auto py-4">
-        <form id="form-login-diretoria" class="space-y-4" onsubmit="entrarDiretoria(event)">
-          <div><label class="block text-sm text-gray-300 mb-1">E-mail</label><input id="email-diretoria" type="email" required class="w-full bg-brand-dark border border-gray-700 rounded-xl px-4 py-3 text-white"></div>
-          <div><label class="block text-sm text-gray-300 mb-1">Senha</label><input id="senha-diretoria" type="password" required class="w-full bg-brand-dark border border-gray-700 rounded-xl px-4 py-3 text-white"></div>
-          <p id="erro-login-diretoria" class="hidden text-sm text-red-400 bg-red-500/10 p-3 rounded-xl border border-red-500/30"></p>
-          <button type="submit" id="btn-login-diretoria" class="w-full rounded-xl bg-brand-gold text-black font-bold py-3 hover:bg-brand-goldHover transition">Entrar</button>
+
+      <div id="grid-fotos" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"></div>
+    </section>
+
+  </main>
+
+  <!-- RODAPÉ -->
+  <footer class="bg-brand-card border-t border-gray-800 py-8 px-4 text-center text-xs text-gray-400 mt-12">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-full border border-brand-gold flex items-center justify-center bg-black">
+          <span class="font-logo text-brand-gold text-xl">ER</span>
+        </div>
+        <span class="font-bold text-gray-200">Espaço Recanto • Camobi, Santa Maria-RS</span>
+      </div>
+      <p>© 2026 Espaço Recanto. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- MODAL DE ACESSO - ÁREA DA DIRETORIA -->
+  <div id="modal-diretoria" class="fixed inset-0 z-50 hidden overflow-y-auto bg-black/90 backdrop-blur-sm p-4 md:p-8 flex items-center justify-center">
+    <div class="max-w-5xl w-full my-auto rounded-3xl border border-gray-700 bg-brand-card p-6 md:p-8 shadow-2xl relative">
+      
+      <div class="flex items-start justify-between gap-4 mb-6 border-b border-gray-800 pb-4">
+        <div>
+          <span class="text-brand-gold text-xs font-bold uppercase tracking-widest">Acesso Restrito</span>
+          <h2 class="text-2xl font-extrabold text-white flex items-center gap-2 mt-1">
+            <i class="fa-solid fa-user-gear text-brand-gold"></i> Painel da Diretoria
+          </h2>
+        </div>
+        <button type="button" onclick="fecharDiretoria()" class="text-gray-400 hover:text-white text-3xl font-light transition">&times;</button>
+      </div>
+
+      <!-- FORMULÁRIO DE LOGIN -->
+      <div id="login-diretoria" class="max-w-md mx-auto py-6">
+        <form id="form-login-diretoria" class="space-y-5" onsubmit="entrarDiretoria(event)">
+          <div>
+            <label class="block text-xs font-bold uppercase text-gray-300 mb-2">E-mail Administrativo</label>
+            <input 
+              id="email-diretoria" 
+              type="email" 
+              required 
+              placeholder="diretoria@espacorecantosmb.com"
+              class="w-full bg-brand-dark border border-gray-700 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-brand-gold"
+            />
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase text-gray-300 mb-2">Senha</label>
+            <input 
+              id="senha-diretoria" 
+              type="password" 
+              required 
+              placeholder="••••••••"
+              class="w-full bg-brand-dark border border-gray-700 rounded-xl px-4 py-3.5 text-white text-sm focus:outline-none focus:border-brand-gold"
+            />
+          </div>
+
+          <p id="erro-login-diretoria" class="hidden text-xs text-red-400 bg-red-500/10 p-3 rounded-xl border border-red-500/30"></p>
+
+          <button 
+            type="submit" 
+            id="btn-login-diretoria" 
+            class="w-full rounded-xl bg-brand-gold text-black font-extrabold py-3.5 hover:bg-brand-goldHover transition uppercase tracking-wider text-sm shadow-lg flex items-center justify-center gap-2"
+          >
+            <i class="fa-solid fa-right-to-bracket"></i> Acessar Painel
+          </button>
         </form>
       </div>
-      <div id="painel-diretoria" class="hidden">
-        <div class="flex flex-wrap items-center justify-between gap-3 mb-5"><p id="resumo-diretoria" class="text-gray-300 text-sm">Solicitações</p><button onclick="sairDiretoria()" class="px-4 py-2 rounded-lg bg-red-900/50 text-white">Sair</button></div>
-        <div id="mensagem-diretoria" class="hidden mb-4 rounded-xl p-3 text-sm"></div>
-        <div id="lista-agendamentos" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"></div>
+
+      <!-- PAINEL DE RESERVAS DA DIRETORIA -->
+      <div id="painel-diretoria" class="hidden space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-3 bg-brand-dark p-4 rounded-2xl border border-gray-700">
+          <div>
+            <p class="text-white font-bold text-sm">Gerenciamento de Solicitações</p>
+            <p class="text-xs text-gray-400">Aprove, recuse ou remova os agendamentos cadastrados</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <button onclick="carregarAgendamentosDiretoria()" class="px-3 py-2 rounded-xl bg-gray-800 hover:bg-gray-700 text-brand-gold text-xs font-bold transition flex items-center gap-1.5">
+              <i class="fa-solid fa-rotate"></i> Atualizar
+            </button>
+            <button onclick="sairDiretoria()" class="px-4 py-2 rounded-xl bg-red-600/80 hover:bg-red-600 text-white text-xs font-bold uppercase tracking-wider transition">
+              <i class="fa-solid fa-arrow-right-from-bracket mr-1"></i> Sair
+            </button>
+          </div>
+        </div>
+
+        <div id="lista-agendamentos" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 max-h-[60vh] overflow-y-auto pr-1"></div>
       </div>
+
     </div>
   </div>
 
-  <!-- MODAL FOTO -->
-  <div id="modal-foto" class="fixed inset-0 bg-black/90 z-50 hidden flex items-center justify-center p-4 cursor-pointer" onclick="fecharModal()">
-    <img id="img-modal" src="" class="max-w-full max-h-[90vh] rounded-xl shadow-2xl object-contain" />
+  <!-- MODAL AMPLIAR FOTO -->
+  <div id="modal-foto" class="fixed inset-0 bg-black/95 z-50 hidden flex items-center justify-center p-4 cursor-pointer" onclick="fecharModalFoto()">
+    <div class="relative max-w-4xl max-h-[90vh]">
+      <img id="img-modal" src="" class="max-w-full max-h-[85vh] rounded-2xl shadow-2xl object-contain border border-gray-800" />
+      <p class="text-center text-xs text-gray-400 mt-2">Clique em qualquer lugar para fechar</p>
+    </div>
   </div>
 
-  <!-- SCRIPT -->
+  <!-- LÓGICA JAVASCRIPT INTEGRADA -->
   <script>
+    // Referências DOM
     const inputData = document.getElementById('data_evento');
     const statusDiv = document.getElementById('status-data');
     const btnSubmit = document.getElementById('btn-submit');
     const gradeCalendario = document.getElementById('grade-calendario');
     const mesLabel = document.getElementById('mes-calendario');
     const dataLabel = document.getElementById('data-selecionada-label');
-    const hoje = new Date(); hoje.setHours(0,0,0,0);
+
+    // Manipulação de Data
+    const hoje = new Date(); 
+    hoje.setHours(0,0,0,0);
     let mesVisivel = new Date(hoje.getFullYear(), hoje.getMonth(), 1);
 
     function dataLocalISO(d) {
-      return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-    }
-    function dataLegivel(iso) {
-      if (!iso) return '';
-      const [a,m,d] = iso.split('-'); return `${d}/${m}/${a}`;
+      const ano = d.getFullYear();
+      const mes = String(d.getMonth() + 1).padStart(2, '0');
+      const dia = String(d.getDate()).padStart(2, '0');
+      return `${ano}-${mes}-${dia}`;
     }
 
+    function dataLegivel(iso) {
+      if (!iso) return '';
+      const [a, m, d] = iso.split('-');
+      return `${d}/${m}/${a}`;
+    }
+
+    function aplicarMascaraWhatsApp(input) {
+      let v = input.value.replace(/\D/g, '');
+      if (v.length > 11) v = v.slice(0, 11);
+      
+      if (v.length > 10) {
+        v = v.replace(/^(\d\d)(\d\d\d\d\d)(\d\d\d\d)$/, '($1) $2-$3');
+      } else if (v.length > 6) {
+        v = v.replace(/^(\d\d)(\d\d\d\d)(\d{0,4})$/, '($1) $2-$3');
+      } else if (v.length > 2) {
+        v = v.replace(/^(\d\d)(\d{0,5})$/, '($1) $2');
+      } else if (v.length > 0) {
+        v = v.replace(/^(\d*)$/, '($1');
+      }
+      input.value = v;
+    }
+
+    // Renderização do Calendário
     function renderizarCalendario() {
-      mesLabel.textContent = mesVisivel.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
-      mesLabel.textContent = mesLabel.textContent.charAt(0).toUpperCase() + mesLabel.textContent.slice(1);
+      const nomeMes = mesVisivel.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
+      mesLabel.textContent = nomeMes.charAt(0).toUpperCase() + nomeMes.slice(1);
       gradeCalendario.innerHTML = '';
       
       const primeiroDia = new Date(mesVisivel.getFullYear(), mesVisivel.getMonth(), 1);
-      const diasNoMes = new Date(mesVisivel.getFullYear(), mesVisivel.getMonth()+1, 0).getDate();
+      const diasNoMes = new Date(mesVisivel.getFullYear(), mesVisivel.getMonth() + 1, 0).getDate();
       
+      // Espaços em branco antes do primeiro dia
       for (let i = 0; i < primeiroDia.getDay(); i++) {
-        gradeCalendario.appendChild(document.createElement('div'));
+        const vazia = document.createElement('div');
+        gradeCalendario.appendChild(vazia);
       }
 
+      // Dias do mês
       for (let dia = 1; dia <= diasNoMes; dia++) {
-        const d = new Date(mesVisivel.getFullYear(), mesVisivel.getMonth(), dia); 
+        const d = new Date(mesVisivel.getFullYear(), mesVisivel.getMonth(), dia);
         d.setHours(0,0,0,0);
-        const iso = dataLocalISO(d); 
+        const iso = dataLocalISO(d);
         const passado = d < hoje;
+        const selecionado = iso === inputData.value;
 
-        const b = document.createElement('button'); 
-        b.type = 'button'; 
+        const b = document.createElement('button');
+        b.type = 'button';
         b.textContent = dia;
-        b.className = 'min-h-12 md:min-h-14 rounded-xl border text-sm md:text-base font-bold transition ' +
-          (iso === inputData.value ? 'bg-brand-gold text-black border-brand-gold' : passado ? 'bg-gray-800/60 text-gray-600 border-gray-800 cursor-not-allowed' : 'bg-brand-dark text-gray-100 border-gray-700 hover:border-brand-gold hover:text-brand-gold');
 
-        b.disabled = passado; 
+        let estiloClasses = 'min-h-[48px] md:min-h-[56px] rounded-xl font-bold text-sm md:text-base transition flex items-center justify-center border ';
+
+        if (selecionado) {
+          estiloClasses += 'bg-brand-gold text-black border-brand-gold shadow-lg scale-105 font-extrabold z-10';
+        } else if (passado) {
+          estiloClasses += 'bg-gray-800/30 text-gray-600 border-gray-800 cursor-not-allowed';
+        } else {
+          estiloClasses += 'bg-brand-card text-gray-100 border-gray-700/80 hover:border-brand-gold hover:text-brand-gold hover:bg-brand-dark';
+        }
+
+        b.className = estiloClasses;
+        b.disabled = passado;
         b.onclick = () => selecionarData(iso);
         gradeCalendario.appendChild(b);
       }
@@ -262,45 +534,66 @@
 
     function selecionarData(iso) {
       inputData.value = iso;
-      dataLabel.textContent = `Data escolhida: ${dataLegivel(iso)}`;
-      renderizarCalendario(); 
+      dataLabel.textContent = `Data selecionada: ${dataLegivel(iso)}`;
+      renderizarCalendario();
       verificarDataDisponivel();
     }
 
     document.getElementById('mes-anterior').onclick = () => {
-      const ant = new Date(mesVisivel.getFullYear(), mesVisivel.getMonth()-1, 1);
-      if (ant >= new Date(hoje.getFullYear(), hoje.getMonth(), 1)) { mesVisivel = ant; renderizarCalendario(); }
+      const ant = new Date(mesVisivel.getFullYear(), mesVisivel.getMonth() - 1, 1);
+      if (ant >= new Date(hoje.getFullYear(), hoje.getMonth(), 1)) {
+        mesVisivel = ant;
+        renderizarCalendario();
+      }
     };
-    document.getElementById('proximo-mes').onclick = () => { mesVisivel = new Date(mesVisivel.getFullYear(), mesVisivel.getMonth()+1, 1); renderizarCalendario(); };
 
+    document.getElementById('proximo-mes').onclick = () => {
+      mesVisivel = new Date(mesVisivel.getFullYear(), mesVisivel.getMonth() + 1, 1);
+      renderizarCalendario();
+    };
+
+    // RPC: Verificar Disponibilidade no Supabase
     async function verificarDataDisponivel() {
       const dataEscolhida = inputData.value;
       if (!dataEscolhida) return;
-      statusDiv.className = 'mt-3 text-xs p-3 rounded-xl bg-gray-800 text-gray-300 block';
-      statusDiv.textContent = 'Verificando disponibilidade...';
+
+      statusDiv.className = 'text-xs md:text-sm font-semibold px-4 py-2.5 rounded-xl bg-gray-800 text-gray-300 block border border-gray-700';
+      statusDiv.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-1.5 text-brand-gold"></i> Verificando disponibilidade da data...';
+      
       try {
         const { data, error } = await _supabase.rpc('verificar_data_disponivel', { data_consulta: dataEscolhida });
         if (error) throw error;
+
         if (data === false) {
-          statusDiv.className = 'mt-3 text-xs p-3 rounded-xl bg-red-500/10 text-red-400 border border-red-500/30 block';
-          statusDiv.innerHTML = '❌ <strong>Data indisponível.</strong>';
-          btnSubmit.disabled = true; btnSubmit.classList.add('opacity-50','cursor-not-allowed');
+          statusDiv.className = 'text-xs md:text-sm font-semibold px-4 py-2.5 rounded-xl bg-red-500/10 text-red-400 border border-red-500/30 block';
+          statusDiv.innerHTML = '❌ <strong>Data indisponível.</strong> Já existe um agendamento para este dia.';
+          btnSubmit.disabled = true;
+          btnSubmit.classList.add('opacity-50', 'cursor-not-allowed');
           return;
         }
-        statusDiv.className = 'mt-3 text-xs p-3 rounded-xl bg-green-500/10 text-green-400 border border-green-500/30 block';
-        statusDiv.innerHTML = '✅ <strong>Data disponível!</strong>';
-        btnSubmit.disabled = false; btnSubmit.classList.remove('opacity-50','cursor-not-allowed');
+
+        statusDiv.className = 'text-xs md:text-sm font-semibold px-4 py-2.5 rounded-xl bg-green-500/10 text-green-400 border border-green-500/30 block';
+        statusDiv.innerHTML = '✅ <strong>Data livre!</strong> Preencha os campos abaixo para reservar.';
+        btnSubmit.disabled = false;
+        btnSubmit.classList.remove('opacity-50', 'cursor-not-allowed');
+
       } catch (err) {
-        console.error(err);
-        statusDiv.className = 'mt-3 text-xs p-3 rounded-xl bg-red-500/10 text-red-400 block';
-        statusDiv.textContent = 'Erro ao conectar com o banco de dados. Verifique a conexão.';
+        statusDiv.className = 'text-xs md:text-sm font-semibold px-4 py-2.5 rounded-xl bg-red-500/10 text-red-400 block border border-red-500/30';
+        statusDiv.textContent = 'Erro ao consultar o banco de dados.';
       }
     }
 
+    // RPC: Solicitar Agendamento no Supabase
     async function processarAgendamento(e) {
       e.preventDefault();
-      if (!inputData.value) return;
-      btnSubmit.textContent = 'Enviando...'; btnSubmit.disabled = true;
+      if (!inputData.value) {
+        alert('Por favor, selecione uma data no calendário.');
+        return;
+      }
+
+      btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Enviando solicitação...';
+      btnSubmit.disabled = true;
+
       try {
         const { data, error } = await _supabase.rpc('solicitar_agendamento', {
           p_nome_cliente: document.getElementById('nome_cliente').value.trim(),
@@ -308,14 +601,25 @@
           p_data_evento: inputData.value,
           p_tipo_evento: document.getElementById('tipo_evento').value
         });
+
         if (error) throw error;
-        if (!data || data.success !== true) { alert('Data ocupada.'); btnSubmit.disabled = false; return; }
+
+        if (!data || data.success !== true) {
+          alert('Atenção: ' + (data ? data.message : 'Esta data foi reservada recentemente por outro cliente.'));
+          btnSubmit.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Confirmar e Solicitar Agendamento';
+          btnSubmit.disabled = false;
+          verificarDataDisponivel();
+          return;
+        }
+
         document.getElementById('form-agendamento').classList.add('hidden');
         document.getElementById('reserva-data-confirmada').textContent = dataLegivel(inputData.value);
         document.getElementById('sucesso-reserva').classList.remove('hidden');
+
       } catch (err) {
-        alert('Erro ao enviar agendamento.');
-        btnSubmit.textContent = 'Confirmar e Solicitar Agendamento'; btnSubmit.disabled = false;
+        alert('Falha ao registrar agendamento. Verifique sua conexão.');
+        btnSubmit.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Confirmar e Solicitar Agendamento';
+        btnSubmit.disabled = false;
       }
     }
 
@@ -323,47 +627,119 @@
       document.getElementById('form-agendamento').reset();
       document.getElementById('form-agendamento').classList.remove('hidden');
       document.getElementById('sucesso-reserva').classList.add('hidden');
-      inputData.value = ''; dataLabel.textContent = 'Selecione um dia no calendário.';
-      statusDiv.classList.add('hidden'); btnSubmit.disabled = true; renderizarCalendario();
+      inputData.value = '';
+      dataLabel.textContent = 'Nenhuma data selecionada no calendário.';
+      statusDiv.classList.add('hidden');
+      btnSubmit.disabled = true;
+      btnSubmit.classList.add('opacity-50', 'cursor-not-allowed');
+      renderizarCalendario();
     }
 
-    function abrirDiretoria() { document.getElementById('modal-diretoria').classList.remove('hidden'); }
-    function fecharDiretoria() { document.getElementById('modal-diretoria').classList.add('hidden'); }
+    // Área da Diretoria Modal & Auth
+    function abrirDiretoria() {
+      document.getElementById('modal-diretoria').classList.remove('hidden');
+    }
+
+    function fecharDiretoria() {
+      document.getElementById('modal-diretoria').classList.add('hidden');
+    }
 
     async function entrarDiretoria(e) {
       e.preventDefault();
       const errEl = document.getElementById('erro-login-diretoria');
+      const btnLogin = document.getElementById('btn-login-diretoria');
+      
       errEl.classList.add('hidden');
+      btnLogin.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Autenticando...';
+      
       try {
         const email = document.getElementById('email-diretoria').value.trim();
         const password = document.getElementById('senha-diretoria').value;
+
         const { error } = await _supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
+
         document.getElementById('login-diretoria').classList.add('hidden');
         document.getElementById('painel-diretoria').classList.remove('hidden');
-        carregarAgendamentos();
+        carregarAgendamentosDiretoria();
+
       } catch (err) {
-        errEl.textContent = 'Erro ao entrar: ' + (err.message || 'Credenciais inválidas');
+        errEl.textContent = 'Credenciais incorretas ou sem permissão de acesso.';
         errEl.classList.remove('hidden');
+      } finally {
+        btnLogin.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Acessar Painel';
       }
     }
 
-    async function carregarAgendamentos() {
+    // Listagem Administrativa
+    async function carregarAgendamentosDiretoria() {
       const lista = document.getElementById('lista-agendamentos');
-      lista.innerHTML = '<p class="text-gray-400">Carregando...</p>';
+      lista.innerHTML = '<div class="col-span-full text-center py-8 text-gray-400"><i class="fa-solid fa-spinner fa-spin text-2xl text-brand-gold mb-2"></i><p class="text-xs">Buscando agendamentos...</p></div>';
+
       try {
-        const { data, error } = await _supabase.from('agendamentos').select('*').order('data_evento');
+        const { data, error } = await _supabase
+          .from('agendamentos')
+          .select('*')
+          .order('data_evento', { ascending: true });
+
         if (error) throw error;
+
         lista.innerHTML = '';
-        if (!data.length) { lista.innerHTML = '<p class="text-gray-400">Nenhum agendamento.</p>'; return; }
+        if (!data || data.length === 0) {
+          lista.innerHTML = '<div class="col-span-full text-center py-8 text-gray-400 bg-brand-dark rounded-xl border border-gray-800"><p class="text-sm">Nenhum agendamento encontrado no banco de dados.</p></div>';
+          return;
+        }
+
         data.forEach(item => {
           const card = document.createElement('div');
-          card.className = 'bg-brand-dark p-4 rounded-xl border border-gray-700';
-          card.innerHTML = `<h3 class="font-bold text-white">${item.nome_cliente}</h3><p class="text-sm text-gray-300">Data: ${dataLegivel(item.data_evento)}</p><p class="text-sm text-gray-300">Status: ${item.status}</p>`;
+          card.className = 'bg-brand-dark p-4 rounded-2xl border border-gray-700 flex flex-col justify-between space-y-3 shadow-md';
+
+          let corStatus = 'text-yellow-400 bg-yellow-500/10 border-yellow-500/30';
+          if (item.status === 'Confirmado') corStatus = 'text-green-400 bg-green-500/10 border-green-500/30';
+          if (item.status === 'Cancelado') corStatus = 'text-red-400 bg-red-500/10 border-red-500/30';
+
+          card.innerHTML = `
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-2">
+                <span class="text-[10px] px-2.5 py-1 rounded-full border font-bold uppercase tracking-wider ${corStatus}">${item.status}</span>
+                <span class="text-xs font-bold text-brand-gold"><i class="fa-regular fa-calendar mr-1"></i>${dataLegivel(item.data_evento)}</span>
+              </div>
+              <h4 class="font-extrabold text-white text-base">${item.nome_cliente}</h4>
+              <p class="text-xs text-gray-300 mt-1"><i class="fa-brands fa-whatsapp text-green-400 mr-1"></i> ${item.whatsapp}</p>
+              <p class="text-xs text-gray-400 mt-0.5"><i class="fa-solid fa-tag text-brand-gold mr-1"></i> ${item.tipo_evento || 'Não informado'}</p>
+            </div>
+            <div class="flex items-center gap-2 pt-2 border-t border-gray-800">
+              <button onclick="atualizarStatus('${item.id}', 'Confirmado')" class="flex-1 bg-green-600/80 hover:bg-green-600 text-white text-xs font-bold py-2 rounded-lg transition" title="Aprovar">Aprovar</button>
+              <button onclick="atualizarStatus('${item.id}', 'Cancelado')" class="flex-1 bg-yellow-600/80 hover:bg-yellow-600 text-white text-xs font-bold py-2 rounded-lg transition" title="Recusar">Recusar</button>
+              <button onclick="excluirAgendamento('${item.id}')" class="px-3 bg-red-600/40 hover:bg-red-600 text-white text-xs py-2 rounded-lg transition" title="Excluir"><i class="fa-solid fa-trash"></i></button>
+            </div>
+          `;
           lista.appendChild(card);
         });
+
       } catch (err) {
-        lista.innerHTML = '<p class="text-red-400">Erro ao carregar solicitações do banco de dados.</p>';
+        lista.innerHTML = '<div class="col-span-full text-center py-8 text-red-400"><p class="text-xs">Erro ao carregar os agendamentos.</p></div>';
+      }
+    }
+
+    async function atualizarStatus(id, novoStatus) {
+      try {
+        const { error } = await _supabase.from('agendamentos').update({ status: novoStatus }).eq('id', id);
+        if (error) throw error;
+        carregarAgendamentosDiretoria();
+      } catch (err) {
+        alert('Erro ao atualizar registro: ' + err.message);
+      }
+    }
+
+    async function excluirAgendamento(id) {
+      if (!confirm('Tem certeza que deseja excluir esta solicitação permanentemente?')) return;
+      try {
+        const { error } = await _supabase.from('agendamentos').delete().eq('id', id);
+        if (error) throw error;
+        carregarAgendamentosDiretoria();
+      } catch (err) {
+        alert('Erro ao excluir registro: ' + err.message);
       }
     }
 
@@ -371,26 +747,55 @@
       await _supabase.auth.signOut();
       document.getElementById('painel-diretoria').classList.add('hidden');
       document.getElementById('login-diretoria').classList.remove('hidden');
+      document.getElementById('form-login-diretoria').reset();
     }
 
-    const fotos = ['IMG_5808.jpg', 'IMG_5813.jpg', 'IMG_5814.jpg', 'IMG_5815.jpg', 'IMG_5816.jpg', 'IMG_5817.jpg', 'IMG_5823.jpg', 'IMG_5824.jpg', 'IMG_5825.jpg', 'IMG_5826.jpg', 'IMG_5828.jpg', 'IMG_5829.jpg'];
+    // Galeria Visual
+    const listaFotos = [
+      'IMG_5808.jpg', 'IMG_5813.jpg', 'IMG_5814.jpg', 'IMG_5815.jpg',
+      'IMG_5816.jpg', 'IMG_5817.jpg', 'IMG_5823.jpg', 'IMG_5824.jpg',
+      'IMG_5825.jpg', 'IMG_5826.jpg', 'IMG_5828.jpg', 'IMG_5829.jpg'
+    ];
+
     function renderizarGaleria() {
       const container = document.getElementById('grid-fotos');
       container.innerHTML = '';
-      fotos.forEach(arq => {
+
+      listaFotos.forEach(arq => {
         const url = `${BUCKET_URL}/${arq}`;
-        const div = document.createElement('div');
-        div.className = 'relative group overflow-hidden rounded-xl bg-brand-card border border-gray-800 cursor-pointer aspect-video';
-        div.onclick = () => { document.getElementById('img-modal').src = url; document.getElementById('modal-foto').classList.remove('hidden'); document.getElementById('modal-foto').classList.add('flex'); };
-        div.innerHTML = `<img src="${url}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition" />`;
-        container.appendChild(div);
+        const card = document.createElement('div');
+        card.className = 'relative group overflow-hidden rounded-2xl bg-brand-card border border-gray-800 cursor-pointer aspect-video shadow-md hover:border-brand-gold transition-all duration-300';
+        card.onclick = () => abrirModalFoto(url);
+
+        card.innerHTML = `
+          <img 
+            src="${url}" 
+            loading="lazy" 
+            alt="Foto Espaço Recanto" 
+            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+            onerror="this.onerror=null; this.parentElement.style.display='none';"
+          />
+          <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+            <i class="fa-solid fa-magnifying-glass-plus text-brand-gold text-2xl"></i>
+          </div>
+        `;
+        container.appendChild(card);
       });
     }
-    function fecharModal() { document.getElementById('modal-foto').classList.add('hidden'); }
 
+    function abrirModalFoto(url) {
+      document.getElementById('img-modal').src = url;
+      document.getElementById('modal-foto').classList.remove('hidden');
+    }
+
+    function fecharModalFoto() {
+      document.getElementById('modal-foto').classList.add('hidden');
+    }
+
+    // Inicialização ao carregar a página
     document.addEventListener('DOMContentLoaded', () => {
       btnSubmit.disabled = true;
-      btnSubmit.classList.add('opacity-50','cursor-not-allowed');
+      btnSubmit.classList.add('opacity-50', 'cursor-not-allowed');
       renderizarCalendario();
       renderizarGaleria();
     });
